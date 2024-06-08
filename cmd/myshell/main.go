@@ -52,6 +52,11 @@ func main() {
                     fmt.Print(parts[1], ": not found\n");
                 }
             }
+		} else if parts[0] == "cd" {
+			err := os.Chdir(parts[1])
+            if err != nil {
+                fmt.Print(parts[1], ": No such file or directory\n")
+            }
 		} else {
             cmd := exec.Command(parts[0], parts[1:]...);
             cmd.Stdout = os.Stdout;
