@@ -53,13 +53,13 @@ func main() {
                 }
             }
 		} else {
-            cmd := exec.Command(parts[0], parts[1:]...)
-            cmd.Stdout = os.Stdout
-            cmd.Stderr = os.Stderr
-            err := cmd.Run()
+            cmd := exec.Command(parts[0], parts[1:]...);
+            cmd.Stdout = os.Stdout;
+            cmd.Stderr = os.Stderr;
+            err := cmd.Run();
             if err != nil {
-                fmt.Println(err)
-            }
+				fmt.Print(parts[0], ": command not found\n");
+			}
         }
 
 	}
