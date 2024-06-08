@@ -53,6 +53,9 @@ func main() {
                 }
             }
 		} else if parts[0] == "cd" {
+			if parts[1] == "~" {
+				parts[1] = os.Getenv("HOME");
+			}
 			err := os.Chdir(parts[1])
             if err != nil {
                 fmt.Print(parts[1], ": No such file or directory\n")
