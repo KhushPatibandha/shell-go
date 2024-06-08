@@ -20,12 +20,19 @@ func main() {
 		} else if parts[0] == "echo" {
 			for i := 1; i < len(parts); i++ {
 				if i == len(parts) - 1 {
-					fmt.Print(parts[i]);
+					fmt.Print(parts[i], "\n");
 				} else {
 					fmt.Print(parts[i] + " ");
 				}
 			}
-			fmt.Print("\n")
+		} else if parts[0] == "type" {
+			if parts[1] == "echo" || parts[1] == "exit" || parts[1] == "type" {
+				fmt.Print(parts[1], " is a shell builtin\n");
+			} else if parts[1] == "cat" {
+				fmt.Print("cat is /bin/cat\n");
+			} else {
+				fmt.Print(parts[1], " not found\n");
+			}
 		} else {
 			fmt.Print(s, ": command not found\n");
 		}
