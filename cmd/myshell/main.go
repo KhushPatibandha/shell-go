@@ -11,9 +11,11 @@ func main() {
 		fmt.Fprint(os.Stdout, "$ ")
 		var s, err = bufio.NewReader(os.Stdin).ReadString('\n');
 		s = s[:len(s)-1]
-		if s[len(s)-1] == '\r' {
-			s = s[:len(s)-1]
+		
+		if s == "exit 0" {
+			return
 		}
+		
 		if err != nil {
 			fmt.Println(err)
 			return
