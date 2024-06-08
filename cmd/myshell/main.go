@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -11,6 +12,10 @@ func main() {
 	for {
 		fmt.Fprint(os.Stdout, "$ ");
 		var s, err = bufio.NewReader(os.Stdin).ReadString('\n');
+		if err != nil {
+			fmt.Println(err);
+			return;
+		}
 		s = s[:len(s)-1];
 		
 		var parts = strings.Split(s, " ");
@@ -31,15 +36,24 @@ func main() {
 			} else if parts[1] == "cat" {
 				fmt.Print("cat is /bin/cat\n");
 			} else {
-				fmt.Print(parts[1], " not found\n");
-			}
+                pathEnv := os.Getenv("PATH")
+                paths := strings.Split(pathEnv, ":")
+                found := false
+                for _, path := range paths {
+                    filePath := filepath.Join(path, parts[1])
+                    if _, err := os.Stat(filePath); err == nil {
+                        fmt.Print(parts[1], " is ", filePath, "\n")
+                        found = true
+                        break
+                    }
+                }
+                if !found {
+                    fmt.Print(parts[1], ": not found\n");
+                }
+            }
 		} else {
 			fmt.Print(s, ": command not found\n");
 		}
 
-		if err != nil {
-			fmt.Println(err);
-			return;
-		}
 	}
 }
